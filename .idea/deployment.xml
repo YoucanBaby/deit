@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="FAREAST.v-yifangxu@localhost:12345" deleteMissingItems="true" createEmptyFolders="true">
+    <serverData>
+      <paths name="FAREAST.v-yifangxu@localhost:12345">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/v-yifangxu/Desktop/deit" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/v-yifangxu/Desktop/VST" local="$PROJECT_DIR$/../VST" web="/" />
+            <mapping deploy="/home/v-yifangxu/Desktop/VG/2D-TAN" local="$PROJECT_DIR$/../VG/2D-TAN" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>

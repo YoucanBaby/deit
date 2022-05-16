@@ -1,0 +1,43 @@
+description: msroctovc_cnn_cnn_128_256_5b_4sa_4h
+
+target:
+  service: sing
+  name: msroctovc
+
+storage:
+  data:
+    storage_account_name: scim
+    container_name: v-yifangxu
+
+environment:
+  image: v-yuczhao/vit:pytorch1.11.0
+  registry: msraimsouthcentralus.azurecr.io
+  username: msraimsouthcentralus
+  setup:
+    - pip install timm
+    - pip install ptflops
+    - export PYTHONPATH=$PYTHONPATH:/tmp/code/deit
+
+code:
+  code_upload: True
+  local_dir: $CONFIG_DIR/../
+
+jobs:
+ - name: msroctovc_cnn_cnn_128_256_5b_4sa_4h
+   sku: G8-V100
+   command:
+     - mkdir /tmp/dataset
+     - cd /tmp/dataset
+     - wget -c https://azcopyvnext.azureedge.net/release20211027/azcopy_linux_amd64_10.13.0.tar.gz
+     - tar -xzvf azcopy_linux_amd64_10.13.0.tar.gz
+     - azcopy_linux_amd64_10.13.0/azcopy copy 'https://scim.blob.core.windows.net/v-yifangxu/ImageNet?sv=2020-10-02&st=2022-04-09T09%3A00%3A23Z&se=2023-06-10T09%3A00%3A00Z&sr=c&sp=rl&sig=giMpvZi75VZ063DbN2ZsuDo03Pp8581J%2BWHXl%2FfIjzU%3D' ./ --recursive
+
+     - cd /tmp/code
+     - python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --models cnn_cnn_128_256_5b_4sa_4h --batch-size 16 --epochs 110 --data-path /tmp/dataset/ImageNet --data-set IMNET --output_dir $$AMLT_OUTPUT_DIR
+
+   submit_args:
+     container_args:
+       shm_size: 64g
+   sla_tier: basic  # Def ault: premium
+   execution_mode: basic  # Default: basic
+   priority: high  # Default: medium

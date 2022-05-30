@@ -92,7 +92,7 @@ class MultiHeadAttention(nn.Module):
 
         q = self.to_q(x)
         if kv is None:
-            kv = q
+            kv = x
 
         k, v = self.to_kv(kv).chunk(2, dim=-1)
 

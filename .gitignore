@@ -3,3 +3,8 @@
 imnet_resnet50_scratch/timm_temp/
 .dumbo.json
 checkpoints/
+.idea
+.github
+.circleci
+msroctovc
+msrresrchvc
